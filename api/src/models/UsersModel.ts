@@ -1,10 +1,10 @@
 import { Schema, model } from "mongoose";
 
 interface IUsers {
-    name:string;
-    email:string;
-    lastNames:string;
-    password:string;
+    name:String;
+    email:String;
+    lastNames:String;
+    password:String;
     rol:"administrator" | "client",
 }
 

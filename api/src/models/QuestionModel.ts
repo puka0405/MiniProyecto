@@ -4,7 +4,7 @@ interface IQuestion{
     title:String;
     type:"radio" | "checkbox" | "select" | "text",
     isMandatory: boolean,
-    QuestionnaireId: Schema.Types.ObjectId | string;
+    qstnrId: Schema.Types.ObjectId | String;
 }
 
 const QuestionSchema = new Schema <IQuestion>({

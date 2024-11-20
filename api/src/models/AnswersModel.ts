@@ -1,9 +1,9 @@
 import { Schema, model } from "mongoose";
 
 interface IAnswer{
-    qstnrId:Schema.Types.ObjectId | string;
-    questionId: Schema.Types.ObjectId | string;
-    answer:string;
+    qstnrId:Schema.Types.ObjectId | String;
+    questionId: Schema.Types.ObjectId | String;
+    answer:String;
 }
 
 const AnswerSchema = new Schema<IAnswer>({

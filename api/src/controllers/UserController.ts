@@ -1,5 +1,7 @@
 import { Request, Response } from "express"
 import{UserModel} from "../models/UsersModel"
+import jwt from "jsonwebtoken";
+
 export const registerUsers = async (req: Request, res: Response): Promise<any> => {
     try {
         //Primero validar que los datos que necesitamos existen
@@ -22,15 +24,17 @@ export const registerUsers = async (req: Request, res: Response): Promise<any> =
                 msg: "No puedes crear un nuevo administrador si no eres uno"
             })
         }
-        await UserModel.create({
+        const user = await UserModel.create({
             name,
             lastNames,
             email,
             password,
             rol
         })
-        return res.status(200).json({msg:"Usuario registrado con éxito"})
+        const token = jwt.sign(JSON.stringify(user), "shht");
 
+
+        return res.status(200).json({msg:"Usuario registrado con éxito", token})
 
     } catch (error) {
         console.log(error);

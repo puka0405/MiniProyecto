@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
-
+import axios from "axios";
 
 const App = () => {
   const [data, setData] = useState({});
@@ -12,9 +12,14 @@ const App = () => {
     setData(loginData)
   }
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     //Peticion a la DB
-    console.log(data)
+   try {
+    await axios.post ("http://localhost:4000/users/iniciar", data)
+    alert("Correcto")
+   } catch (error) {
+    alert("Incorrecto")
+   }
   }
 
   return (

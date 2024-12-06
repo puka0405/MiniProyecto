@@ -1,22 +1,29 @@
 import React, { useState } from 'react'
 import { Card, Container, Form, Row, Col, Button, InputGroup, CloseButton, Tooltip, OverlayTrigger } from 'react-bootstrap'
 import { AnwerQuestionnaire } from './components/AnwerQuestionnaire';
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 export const CreateQuestionnaire = () => {
 
+    const navigate = useNavigate();
+
     const [showQuestionnaire, setShowQuestionnaire] = useState(false);
+
+    const defaultQuestion = {
+        title: "Pregunta sin titulo",
+        type: "radio",
+        options: ["Opción 1"],
+        isMandatory: false,
+    }
 
     const [createQuestionnaire, setCreateQuestionnaire] = useState({
         title: "Cuestionario vacio",
         description: "Descripcion simple",
         questions: [
-            {
-                title: "Pregunta sin titulo",
-                type: "radio",
-                options: ["Opción 1"],
-                isMandatory: false,
-            }
-        ]
+            defaultQuestion
+        ],
+        IUsers: JSON.parse(localStorage.user)._Id
     });
 
     const onChangeTitle = (e) => {
@@ -44,6 +51,7 @@ export const CreateQuestionnaire = () => {
             type: "radio",
             options: ["Opción 1"]
         })
+        data.questions.push(defaultQuestion)
         setCreateQuestionnaire({ ...data })
     };
 
@@ -60,7 +68,13 @@ export const CreateQuestionnaire = () => {
         setCreateQuestionnaire({ ...data });
     }
 
-    const sendData = () => {
+    const sendData = async () => {
+        try {
+            const res = await axios.post("http://localhost:4000/questionnaires/createQuestionnaire", createQuestionnaire);
+            navigate("/list-q")
+        } catch (error) {
+            alert("Hubo un error", error)
+        }
         console.log(createQuestionnaire);
     }
 
